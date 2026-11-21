@@ -1,0 +1,16 @@
+{
+  "name": "syntaxtutor-landing",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Landing page for SyntaxTutor (UX project, first iteration).",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "node scripts/check-demo.mjs && node scripts/check-sections.mjs"
+  },
+  "devDependencies": {
+    "vite": "8.3.6"
+  }
+}

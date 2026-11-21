@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SyntaxTutor: practica LL(1) y SLR(1) paso a paso</title>
+  <meta name="description" content="Aplicación de escritorio libre y gratuita para practicar la construcción de analizadores sintácticos LL(1) y SLR(1), con corrección de cada respuesta. Para Windows, macOS y Linux.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#1b1f2a">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SyntaxTutor: practica LL(1) y SLR(1) paso a paso">
+  <meta property="og:description" content="Un tutor de escritorio que te pregunta, paso a paso, cómo se construyen los analizadores LL(1) y SLR(1), y corrige cada respuesta.">
+  <meta property="og:locale" content="es_ES">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/src/styles.css">
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#" aria-label="SyntaxTutor, inicio de la página">
+        <img src="/src/img/syntaxtutor-lockup-dark-text.svg" alt="" width="176" height="42">
+      </a>
+      <nav aria-label="Secciones">
+        <ul class="nav-list">
+          <li><a href="#como-funciona">Cómo funciona</a></li>
+          <li><a href="#demo">Demostración</a></li>
+          <li><a href="#documentacion">Documentación</a></li>
+          <li><a class="nav-download" href="#descargar" data-track="download_shortcut_clicked" data-location="header">Descargar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div class="hero-text">
+          <p class="eyebrow">Tutor de análisis sintáctico</p>
+          <h1 id="hero-title">Practica LL(1) y SLR(1) paso a paso</h1>
+          <p class="lede">
+            SyntaxTutor es una aplicación de escritorio que te plantea la
+            construcción de un analizador sintáctico pregunta a pregunta:
+            conjuntos primero y siguiente, símbolos directores, estados LR(0)
+            y tabla de análisis. Corrige cada respuesta y, si fallas, divide
+            el problema en preguntas más pequeñas.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#descargar" data-track="download_shortcut_clicked" data-location="hero">Descargar</a>
+            <a class="btn btn-secondary" href="#demo">Probar la demostración</a>
+          </div>
+          <ul class="facts" aria-label="Datos básicos">
+            <li>Windows, macOS y Linux</li>
+            <li>Gratuita y de código abierto (GPLv3)</li>
+            <li>Sin registro ni conexión</li>
+          </ul>
+        </div>
+        <figure class="hero-shot shot">
+          <img
+            src="/src/img/ll-tutor-960.webp"
+            srcset="/src/img/ll-tutor-960.webp 960w, /src/img/ll-tutor-1600.webp 1600w"
+            sizes="(min-width: 960px) 56vw, 100vw"
+            width="1600" height="1000"
+            alt="Ventana del tutor LL(1). A la izquierda, la conversación: el tutor pregunta los símbolos directores de una regla, la respuesta del estudiante aparece en rojo por ser incorrecta y el tutor explica el error y pregunta por el conjunto cabecera. En el centro, la gramática; a la derecha, los conjuntos ya calculados.">
+          <figcaption>El tutor LL(1) tras una respuesta incorrecta: explica el fallo y
+            pasa a una pregunta más pequeña.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- FOR WHOM -->
+    <section id="te-sirve" class="section fit" aria-labelledby="fit-title">
+      <div class="wrap">
+        <h2 id="fit-title">¿Te sirve?</h2>
+        <div class="fit-grid">
+          <div>
+            <h3 class="fit-yes">Te puede servir si…</h3>
+            <ul class="check-list">
+              <li>estudias Compiladores o Procesadores de Lenguajes y quieres
+                practicar LL(1) o SLR(1) con corrección inmediata;</li>
+              <li>quieres resolver ejercicios con las gramáticas de tus apuntes o
+                con gramáticas generadas en tres niveles de dificultad;</li>
+              <li>quieres comprobar si dominas el método con un examen simulado,
+                sin ayudas y con nota.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="fit-no">No te servirá si…</h3>
+            <ul class="cross-list">
+              <li>buscas otros métodos, como LR(1) o LALR(1), o un generador de
+                analizadores para un proyecto;</li>
+              <li>quieres que te calcule la tabla directamente: es un tutor, no
+                una calculadora;</li>
+              <li>usas un móvil, una tableta o un Mac con procesador Intel: solo
+                hay versión de escritorio y, en Mac, para Apple Silicon.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="aside-note">
+          <strong>Si das clase:</strong> funciona sin conexión, admite las
+          gramáticas que escribas y el modo examen genera un informe en PDF con
+          la nota y la revisión de cada respuesta.
+        </p>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="como-funciona" class="section" aria-labelledby="how-title">
+      <div class="wrap">
+        <h2 id="how-title">Cómo funciona</h2>
+        <ol class="steps">
+          <li>
+            <h3>Eliges el ejercicio</h3>
+            <p>LL(1) o SLR(1), con una gramática generada en tres niveles de
+              dificultad o con una que escribas tú. El editor comprueba que la
+              gramática sea válida para el método elegido.</p>
+          </li>
+          <li>
+            <h3>Respondes pregunta a pregunta</h3>
+            <p>El tutor recorre el algoritmo completo en una conversación.
+              Cada pregunta indica el formato de respuesta, y la gramática y
+              lo que ya has calculado quedan siempre a la vista.</p>
+          </li>
+          <li>
+            <h3>Si fallas, lo descompone</h3>
+            <p>Una respuesta incorrecta no termina el ejercicio: el tutor
+              explica qué ha fallado y te pregunta por las partes del cálculo
+              antes de volver a la pregunta original.</p>
+          </li>
+          <li>
+            <h3>Terminas con la tabla</h3>
+            <p>Al final rellenas la tabla de análisis. Las celdas incorrectas
+              se marcan y, si te atascas, un modo guiado la recorre celda a
+              celda.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- DEMO -->
+    <section id="demo" class="section demo-section" aria-labelledby="demo-title">
+      <div class="wrap">
+        <h2 id="demo-title">Pruébalo aquí: dos preguntas del tutor LL(1)</h2>
+        <div class="demo-intro">
+          <p>
+            Es una <strong>demostración simplificada</strong>, no la
+            aplicación. Reproduce dos preguntas de un ejercicio LL(1) con una
+            gramática fija; las preguntas, las respuestas correctas y los
+            mensajes son los de SyntaxTutor&nbsp;2.0. Se completa en uno o dos
+            minutos y no guarda nada.
+          </p>
+          <p>
+            Si no sabes la respuesta, escribe cualquier cosa: verás qué hace el
+            tutor cuando te equivocas.
+          </p>
+        </div>
+
+        <div class="demo" data-demo>
+          <div class="demo-bar">
+            <span class="demo-counter" aria-label="Respuestas correctas"><span aria-hidden="true">✔</span> <span data-right>0</span></span>
+            <span class="demo-counter demo-counter-wrong" aria-label="Respuestas incorrectas"><span aria-hidden="true">✘</span> <span data-wrong>0</span></span>
+            <span class="demo-label">Demostración · Tutor LL(1)</span>
+          </div>
+          <div class="demo-body">
+            <div class="demo-chat">
+              <ol class="chat-log" data-log tabindex="0" role="log" aria-live="polite" aria-label="Conversación con el tutor"></ol>
+              <div class="demo-start" data-start-panel>
+                <button type="button" class="btn btn-primary" data-start hidden>Empezar la demostración</button>
+                <noscript>
+                  <p class="demo-noscript">La demostración necesita JavaScript, que está desactivado en este
+                    navegador. El funcionamiento del tutor LL(1) se explica en el
+                    <a href="https://github.com/jose-rZM/SyntaxTutor/releases/download/v2.0.0/SyntaxTutor-Manual-ES.pdf" data-doc="manual_es">manual de usuario</a>.</p>
+                </noscript>
+              </div>
+              <form class="chat-form" data-form hidden>
+                <label class="visually-hidden" for="demo-answer">Tu respuesta</label>
+                <input id="demo-answer" name="answer" type="text" autocomplete="off"
+                  autocapitalize="off" spellcheck="false" placeholder="Ejemplo: a,b,$"
+                  aria-describedby="demo-format">
+                <button type="submit" class="send-btn">Enviar</button>
+                <p id="demo-format" class="visually-hidden">Escribe los símbolos separados por comas y pulsa Intro.</p>
+              </form>
+            </div>
+            <aside class="demo-grammar" aria-label="Gramática del ejercicio">
+              <h3>Gramática</h3>
+              <pre class="grammar"><span>S  → E $</span>
+<span>E  → T E'</span>
+<span>E' → + T E'</span>
+<span>   | EPSILON</span>
+<span>T  → id</span>
+<span>   | ( E )</span></pre>
+              <dl class="notation">
+                <dt>CAB</dt><dd>cabecera: primeros (FIRST)</dd>
+                <dt>SIG</dt><dd>siguientes (FOLLOW)</dd>
+                <dt>SD</dt><dd>símbolos directores (predicción)</dd>
+              </dl>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="funciones" class="section" aria-labelledby="features-title">
+      <div class="wrap">
+        <h2 id="features-title">Qué incluye</h2>
+        <div class="feature">
+          <figure class="shot">
+            <img src="/src/img/grammar-editor-720.webp"
+              srcset="/src/img/grammar-editor-720.webp 720w, /src/img/grammar-editor-1200.webp 1200w"
+              sizes="(min-width: 960px) 50vw, 100vw" width="1200" height="937" loading="lazy"
+              alt="Editor de gramáticas con una gramática LL(1) válida. A la derecha, el axioma, los no terminales, los terminales y el número de reglas.">
+          </figure>
+          <div>
+            <h3>Tus propias gramáticas</h3>
+            <p>Escribe la gramática de un ejercicio de clase o de un examen
+              anterior. El editor la valida mientras escribes y solo deja empezar
+              si es LL(1) o SLR(1), según el tutor elegido; si no lo es, explica
+              el motivo. También puedes practicar con gramáticas generadas.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <figure class="shot">
+            <img src="/src/img/slr-automaton-720.webp"
+              srcset="/src/img/slr-automaton-720.webp 720w, /src/img/slr-automaton-1200.webp 1200w"
+              sizes="(min-width: 960px) 50vw, 100vw" width="1200" height="854" loading="lazy"
+              alt="Autómata LR(0) con el estado inicial y sus transiciones, dibujado en una ventana aparte.">
+          </figure>
+          <div>
+            <h3>El autómata LR(0), a medida que lo construyes</h3>
+            <p>En SLR(1) calculas el cierre, los ítems y cada transición
+              δ(I,&nbsp;X). El autómata se dibuja con los estados que ya has
+              calculado y resalta aquel en el que estás trabajando.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <figure class="shot">
+            <img src="/src/img/ll-table-retry-640.webp"
+              srcset="/src/img/ll-table-retry-640.webp 640w, /src/img/ll-table-retry-958.webp 958w"
+              sizes="(min-width: 960px) 40vw, 100vw" width="958" height="736" loading="lazy"
+              alt="Tabla LL(1) tras un envío con una celda incorrecta, marcada en rojo.">
+          </figure>
+          <div>
+            <h3>Tablas con corrección y modo guiado</h3>
+            <p>Al enviar la tabla LL(1) o SLR(1), las celdas incorrectas se
+              marcan en rojo. El modo guiado la recorre celda a celda, con una
+              pista para razonar cada una.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <figure class="shot">
+            <img src="/src/img/exam-report-720.webp"
+              srcset="/src/img/exam-report-720.webp 720w, /src/img/exam-report-1200.webp 1200w"
+              sizes="(min-width: 960px) 45vw, 100vw" width="1200" height="1000" loading="lazy"
+              alt="Informe del modo examen con la nota, el número de aciertos y la revisión de cada pregunta.">
+          </figure>
+          <div>
+            <h3>Modo examen</h3>
+            <p>Sin corrección ni ayudas durante el ejercicio y con una nota de
+              0 a 10 al final. El informe muestra tu respuesta y la correcta en
+              cada pregunta, y se puede exportar a PDF.</p>
+          </div>
+        </div>
+        <h3 class="more-title">Además</h3>
+        <ul class="more-list">
+          <li>Exportación a PDF de la conversación, los conjuntos, los estados y la tabla.</li>
+          <li>Resúmenes de la teoría de LL(1) y SLR(1) dentro de la aplicación.</li>
+          <li>Tutorial integrado para empezar.</li>
+          <li>Interfaz en español e inglés.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- DOWNLOADS -->
+    <section id="descargar" class="section downloads" aria-labelledby="dl-title">
+      <div class="wrap">
+        <h2 id="dl-title">Descargar SyntaxTutor <span data-version>2.0.0</span></h2>
+        <p class="section-lead">No necesita instalador ni conexión a Internet:
+          descargas un archivo, lo abres y empiezas.</p>
+        <p class="os-note" data-os-note hidden></p>
+
+        <ul class="dl-list">
+          <li class="dl-item" data-os="windows">
+            <div class="dl-head">
+              <h3>Windows</h3>
+              <span class="dl-tag" hidden>Tu sistema</span>
+            </div>
+            <p class="dl-req">Windows 10 u 11 de 64 bits</p>
+            <a class="btn btn-download" data-dl="windows" data-track="download_clicked" data-os-target="windows"
+              href="https://github.com/jose-rZM/SyntaxTutor/releases/download/v2.0.0/SyntaxTutor-2.0.0-windows-x64.zip">
+              Descargar .zip <span class="dl-size">(48 MB)</span></a>
+            <details>
+              <summary>Cómo abrirlo</summary>
+              <p>Descomprime el ZIP y ejecuta <code>SyntaxTutor.exe</code>; deja los
+                demás archivos junto al ejecutable. Si aparece el aviso de
+                SmartScreen, pulsa <em>Más información</em> y
+                <em>Ejecutar de todas formas</em>.</p>
+            </details>
+          </li>
+          <li class="dl-item" data-os="macos">
+            <div class="dl-head">
+              <h3>macOS</h3>
+              <span class="dl-tag" hidden>Tu sistema</span>
+            </div>
+            <p class="dl-req">Mac con Apple Silicon (M1 o posterior).
+              No hay versión para Mac con Intel.</p>
+            <a class="btn btn-download" data-dl="macos" data-track="download_clicked" data-os-target="macos"
+              href="https://github.com/jose-rZM/SyntaxTutor/releases/download/v2.0.0/SyntaxTutor-2.0.0-macos-arm64.zip">
+              Descargar .zip <span class="dl-size">(32 MB)</span></a>
+            <details>
+              <summary>Cómo abrirlo</summary>
+              <p>Descomprime el ZIP y mueve <code>SyntaxTutor.app</code> a
+                Aplicaciones. La primera vez, ábrela con clic derecho y
+                <em>Abrir</em>. Si macOS la sigue bloqueando, ve a
+                <em>Ajustes del Sistema > Privacidad y seguridad</em> y pulsa
+                <em>Abrir igualmente</em>.</p>
+            </details>
+          </li>
+          <li class="dl-item" data-os="linux">
+            <div class="dl-head">
+              <h3>Linux</h3>
+              <span class="dl-tag" hidden>Tu sistema</span>
+            </div>
+            <p class="dl-req">x86_64 con Ubuntu 22.04, Debian 12 o más reciente</p>
+            <a class="btn btn-download" data-dl="linux" data-track="download_clicked" data-os-target="linux"
+              href="https://github.com/jose-rZM/SyntaxTutor/releases/download/v2.0.0/SyntaxTutor-2.0.0-x86_64.AppImage">
+              Descargar AppImage <span class="dl-size">(33 MB)</span></a>
+            <details>
+              <summary>Cómo abrirlo</summary>
+              <p>Dale permiso de ejecución y ábrelo:</p>
+              <pre><code>chmod +x SyntaxTutor-2.0.0-x86_64.AppImage
+./SyntaxTutor-2.0.0-x86_64.AppImage</code></pre>
+              <p>Funciona en X11 y, en escritorios Wayland, mediante XWayland.</p>
+            </details>
+          </li>
+        </ul>
+
+        <div class="notice" role="note">
+          <p><strong>Aviso al abrirla por primera vez.</strong> Las versiones de
+            Windows y macOS no están firmadas digitalmente, porque la firma
+            requiere un certificado de pago. Por eso el sistema puede mostrar
+            una advertencia. Ábrelas solo si las has descargado desde esta página
+            o desde el repositorio oficial.</p>
+        </div>
+        <p class="dl-more">Versiones anteriores y notas de cada versión:
+          <a href="https://github.com/jose-rZM/SyntaxTutor/releases/latest" data-track="github_clicked" data-location="downloads">releases en GitHub</a>.</p>
+      </div>
+    </section>
+
+    <!-- DOCS -->
+    <section id="documentacion" class="section" aria-labelledby="docs-title">
+      <div class="wrap">
+        <h2 id="docs-title">Documentación y código</h2>
+        <ul class="doc-list">
+          <li>
+            <a href="https://github.com/jose-rZM/SyntaxTutor/releases/download/v2.0.0/SyntaxTutor-Manual-ES.pdf" data-track="docs_clicked" data-doc="manual_es">Manual de usuario</a>
+            <span>PDF en español, 1,4 MB. Instalación, uso de cada tutor y formato de las respuestas.</span>
+          </li>
+          <li>
+            <a href="https://github.com/jose-rZM/SyntaxTutor/releases/download/v2.0.0/SyntaxTutor-Manual-EN.pdf" data-track="docs_clicked" data-doc="manual_en" hreflang="en">User manual</a>
+            <span>PDF en inglés, 1,4 MB.</span>
+          </li>
+          <li>
+            <a href="https://github.com/jose-rZM/SyntaxTutor" data-track="github_clicked" data-location="docs">Código fuente en GitHub</a>
+            <span>C++20 y Qt&nbsp;6, con instrucciones para compilarlo.</span>
+          </li>
+          <li>
+            <a href="https://jose-rzm.github.io/SyntaxTutor/" data-track="docs_clicked" data-doc="dev_docs" hreflang="en">Documentación para desarrolladores</a>
+            <span>Generada con Doxygen, en inglés.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="preguntas" class="section faq" aria-labelledby="faq-title">
+      <div class="wrap">
+        <h2 id="faq-title">Preguntas frecuentes</h2>
+        <details>
+          <summary>En mi asignatura usamos otra notación. ¿Me sirve?</summary>
+          <p>SyntaxTutor usa la notación CAB (conjunto cabecera, equivalente a
+            PRIMERO o FIRST), SIG
+            (SIGUIENTE o FOLLOW) y SD (símbolos directores, también llamados
+            conjunto de predicción). Los conceptos son los habituales; solo
+            cambian los nombres.</p>
+        </details>
+        <details>
+          <summary>¿Necesito saber la teoría antes de usarlo?</summary>
+          <p>Conviene conocer lo básico de gramáticas y del método que vas a
+            practicar. La aplicación incluye resúmenes de la teoría y explica
+            cada error, pero no es un curso.</p>
+        </details>
+        <details>
+          <summary>¿Recoge algún dato?</summary>
+          <p>No. La aplicación funciona sin conexión y guarda tus puntos,
+            el idioma y la última gramática solo en tu ordenador.</p>
+        </details>
+        <details>
+          <summary>¿Se sigue desarrollando?</summary>
+          <p>La versión 2.0 es la última con funciones nuevas: el proyecto se
+            considera terminado. El código es libre, de modo que cualquiera
+            puede estudiarlo, modificarlo o continuarlo.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>SyntaxTutor <span data-version>2.0.0</span> · Software libre bajo
+        <a href="https://github.com/jose-rZM/SyntaxTutor/blob/main/LICENSE">GPLv3</a> ·
+        Creado por <a href="https://github.com/jose-rZM">José R.</a></p>
+      <p class="footer-small">Esta página puede utilizar analítica sin cookies para mejorarla. <a href="privacidad.html">Privacidad</a></p>
+    </div>
+  </footer>
+
+  <div class="analytics-debug" data-analytics-debug hidden>
+    <p class="analytics-debug-title">Eventos registrados (solo locales)</p>
+    <ol data-analytics-list></ol>
+  </div>
+</body>
+</html>

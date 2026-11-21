@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacidad y analítica · SyntaxTutor</title>
+  <meta name="description" content="Qué datos de uso registra la página de SyntaxTutor, con qué herramienta y cómo desactivar la medición.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#1b1f2a">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./" aria-label="SyntaxTutor, volver a la página principal">
+        <img src="/src/img/syntaxtutor-lockup-dark-text.svg" alt="" width="176" height="42">
+      </a>
+      <nav aria-label="Navegación">
+        <ul class="nav-list">
+          <li><a href="./">Volver a la página</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="section legal">
+    <div class="wrap legal-wrap">
+      <h1>Privacidad y analítica</h1>
+      <p class="section-lead">Esta página no utiliza cookies de analítica. <span data-measurement-status>La medición de uso está preparada,
+        pero todavía no se ha activado.</span></p>
+
+      <h2>Qué se registra</h2>
+      <p>Cuando se active la medición, utilizaremos Umami Cloud, un servicio de
+        analítica web de Umami Software, Inc., para registrar:</p>
+      <ul>
+        <li>las visitas a la página;</li>
+        <li>las secciones que llegan a verse;</li>
+        <li>si se empieza y se termina la demostración, y cuántas respuestas
+          incorrectas hubo;</li>
+        <li>los clics en las descargas, la documentación y el repositorio.</li>
+      </ul>
+      <p>No enviamos las respuestas escritas en la demostración ni los
+        parámetros de la dirección de la página. Tampoco pedimos nombres ni
+        correos.</p>
+
+      <h2>Qué datos técnicos se tratan</h2>
+      <p>Umami no utiliza cookies de analítica. Cuando esté activado, el servicio
+        recibirá información técnica de cada visita:</p>
+      <ul>
+        <li>la dirección IP;</li>
+        <li>el navegador y el sistema operativo;</li>
+        <li>el idioma y el tamaño de la pantalla;</li>
+        <li>la página de procedencia.</li>
+      </ul>
+      <p>La IP se utiliza para calcular la ubicación aproximada y un identificador
+        seudónimo de sesión, pero Umami no la almacena como campo en sus registros
+        analíticos ordinarios. Este identificador depende, entre otros factores,
+        de la IP, el navegador y un valor rotatorio.</p>
+      <p>El plan gratuito de Umami Cloud conserva los registros analíticos durante
+        seis meses. La región de almacenamiento dependerá de la configuración de
+        la cuenta y deberá confirmarse antes de activar el servicio.</p>
+      <p>No utilizamos la analítica para publicidad ni para seguir a los
+        visitantes entre sitios.</p>
+
+      <h2>Cómo desactivar la medición</h2>
+      <p>Cuando esté activa la analítica, si tu navegador tiene activada la opción «No rastrear» (<span lang="en">Do Not
+        Track</span>), la página no envía ningún dato. También puedes desactivar
+        la medición solo en este navegador:</p>
+      <p class="optout">
+        <button type="button" class="btn btn-secondary" data-optout hidden>No contar mis visitas</button>
+        <span class="optout-status" data-optout-status role="status"></span>
+      </p>
+      <noscript><p>Este botón necesita JavaScript. Con JavaScript desactivado, la
+        página tampoco envía estadísticas.</p></noscript>
+      <p class="legal-note">El botón guarda una marca en el almacenamiento local
+        del navegador, solo si lo pulsas, para recordar tu elección. Borrar los
+        datos del sitio la elimina.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>SyntaxTutor · Software libre bajo
+        <a href="https://github.com/jose-rZM/SyntaxTutor/blob/main/LICENSE">GPLv3</a></p>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/privacy.js"></script>
+</body>
+</html>
