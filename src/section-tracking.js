@@ -7,7 +7,10 @@ import { TRACKED_SECTIONS } from './config.js';
 export const SECTION_DWELL_MS = 1000;
 
 export function initSectionTracking(track, doc = document, Observer = globalThis.IntersectionObserver,
-  clock = { setTimeout, clearTimeout }, viewportHeight = () => window.innerHeight) {
+  clock = {
+    setTimeout: (...args) => window.setTimeout(...args),
+    clearTimeout: (...args) => window.clearTimeout(...args), 
+  }, viewportHeight = () => window.innerHeight) {
   if (typeof Observer !== 'function') return null;
 
   const waiting = new Map(); // Element -> semantic label
