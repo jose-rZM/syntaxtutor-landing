@@ -136,7 +136,11 @@ function setupDemo() {
     );
     addMessage('tutor', tutor.currentQuestion());
     input.value = '';
-    input.focus({ preventScroll: true });
+    // On touch screens focusing would open the keyboard and cover the page;
+    // the visitor taps the field when ready to answer.
+    if (!window.matchMedia('(pointer: coarse)').matches) {
+      input.focus({ preventScroll: true });
+    }
     track('demo_started');
   }
 

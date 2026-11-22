@@ -533,7 +533,15 @@ p {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overscroll-behavior: contain;
+}
+
+/* Mouse and trackpad: keep the page still while scrolling the conversation.
+   Not on touch screens, where the conversation fills most of the viewport and
+   blocking scroll chaining traps the visitor inside the demo. */
+@media (hover: hover) and (pointer: fine) {
+  .chat-log {
+    overscroll-behavior: contain;
+  }
 }
 
 .chat-log:empty {
@@ -541,9 +549,12 @@ p {
   padding: 0;
 }
 
+/* Small screens: leave part of the page visible around the conversation so
+   there is always somewhere to swipe the page itself. */
 @media (max-width: 859px) {
   .chat-log {
     height: 380px;
+    height: min(380px, 50svh);
   }
 }
 
